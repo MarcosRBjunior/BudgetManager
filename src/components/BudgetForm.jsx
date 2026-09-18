@@ -5,16 +5,22 @@ function BudgetForm({ onAddRow }) {
   const [categoria, setCategoria] = useState('')
   const [data, setData] = useState('')
   const [custo, setCusto] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    if (!compra || !categoria || !data || !custo) return
+    if (!compra || !categoria || !data || !custo || isSubmitting) return
 
-    onAddRow(compra, categoria, data, custo)
-    setCompra('')
-    setCategoria('')
-    setData('')
-    setCusto('')
+    setIsSubmitting(true)
+    const success = await onAddRow(compra, categoria, data, custo)
+    setIsSubmitting(false)
+
+    if (success) {
+      setCompra('')
+      setCategoria('')
+      setData('')
+      setCusto('')
+    }
   }
 
   return (
@@ -77,9 +83,10 @@ function BudgetForm({ onAddRow }) {
 
       <button
         type="submit"
-        className="rounded bg-purple-600 px-4 py-2 text-white transition-colors hover:bg-purple-700"
+        disabled={isSubmitting}
+        className="rounded bg-purple-600 px-4 py-2 text-white transition-colors hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Adicionar linha
+        {isSubmitting ? 'Adicionando...' : 'Adicionar linha'}
       </button>
     </form>
   )
