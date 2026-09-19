@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { INPUT_CLASS } from '../inputClassName'
 
 function BudgetForm({ onAddRow }) {
   const [compra, setCompra] = useState('')
@@ -37,7 +38,7 @@ function BudgetForm({ onAddRow }) {
           type="text"
           value={compra}
           onChange={(event) => setCompra(event.target.value)}
-          className="rounded border border-gray-300 px-3 py-2 transition-colors focus:border-purple-500 focus:outline-none"
+          className={INPUT_CLASS}
         />
       </div>
 
@@ -50,7 +51,7 @@ function BudgetForm({ onAddRow }) {
           type="text"
           value={categoria}
           onChange={(event) => setCategoria(event.target.value)}
-          className="rounded border border-gray-300 px-3 py-2 transition-colors focus:border-purple-500 focus:outline-none"
+          className={INPUT_CLASS}
         />
       </div>
 
@@ -63,7 +64,7 @@ function BudgetForm({ onAddRow }) {
           type="date"
           value={data}
           onChange={(event) => setData(event.target.value)}
-          className="rounded border border-gray-300 px-3 py-2 transition-colors focus:border-purple-500 focus:outline-none"
+          className={INPUT_CLASS}
         />
       </div>
 
@@ -75,9 +76,10 @@ function BudgetForm({ onAddRow }) {
           id="custo"
           type="number"
           step="0.01"
+          min="0"
           value={custo}
           onChange={(event) => setCusto(event.target.value)}
-          className="rounded border border-gray-300 px-3 py-2 transition-colors focus:border-purple-500 focus:outline-none"
+          className={INPUT_CLASS}
         />
       </div>
 
