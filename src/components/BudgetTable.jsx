@@ -3,13 +3,17 @@ import { useState } from 'react'
 const REMOVE_ANIMATION_MS = 200
 
 function BudgetTable({ budgetData, onRemoveRow }) {
-  const [removingId, setRemovingId] = useState(null)
+  const [removingIds, setRemovingIds] = useState(() => new Set())
 
-  function handleRemoveClick(id, index) {
-    setRemovingId(id)
+  function handleRemoveClick(id) {
+    setRemovingIds((prev) => new Set(prev).add(id))
     setTimeout(() => {
-      onRemoveRow(index)
-      setRemovingId(null)
+      onRemoveRow(id)
+      setRemovingIds((prev) => {
+        const next = new Set(prev)
+        next.delete(id)
+        return next
+      })
     }, REMOVE_ANIMATION_MS)
   }
 
@@ -26,11 +30,11 @@ function BudgetTable({ budgetData, onRemoveRow }) {
           </tr>
         </thead>
         <tbody>
-          {budgetData.map((row, index) => (
+          {budgetData.map((row) => (
             <tr
               key={row.id}
               className={`animate-row-fade-in border-t border-gray-200 transition-all duration-200 hover:bg-gray-50 ${
-                removingId === row.id ? 'row-fade-out' : ''
+                removingIds.has(row.id) ? 'row-fade-out' : ''
               }`}
             >
               <td className="p-3">{row.compra}</td>
@@ -40,7 +44,7 @@ function BudgetTable({ budgetData, onRemoveRow }) {
               <td className="p-3 text-right">
                 <button
                   type="button"
-                  onClick={() => handleRemoveClick(row.id, index)}
+                  onClick={() => handleRemoveClick(row.id)}
                   className="rounded bg-red-100 px-3 py-1 text-sm text-red-700 transition-colors hover:bg-red-200"
                 >
                   Remover linha
