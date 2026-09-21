@@ -86,7 +86,7 @@ function BudgetForm({ onAddRow }) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded bg-purple-600 px-4 py-2 text-white transition-colors hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="rounded bg-gray-700 px-4 py-2 text-white transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSubmitting ? 'Adicionando...' : 'Adicionar linha'}
       </button>
