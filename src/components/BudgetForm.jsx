@@ -1,5 +1,8 @@
 import { useState } from 'react'
-import { INPUT_CLASS } from '../inputClassName'
+import Button from './Button'
+import Card from './Card'
+import Input from './Input'
+import { PlusIcon } from '../icons'
 
 function BudgetForm({ onAddRow }) {
   const [compra, setCompra] = useState('')
@@ -25,72 +28,36 @@ function BudgetForm({ onAddRow }) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-wrap items-end gap-3 rounded-lg bg-white p-4 shadow-sm"
-    >
-      <div className="flex flex-col">
-        <label htmlFor="compra" className="text-sm text-gray-600">
-          Compra
-        </label>
-        <input
-          id="compra"
-          type="text"
-          value={compra}
-          onChange={(event) => setCompra(event.target.value)}
-          className={INPUT_CLASS}
-        />
-      </div>
+    <Card>
+      <form onSubmit={handleSubmit} className="flex flex-wrap items-end gap-4">
+        <div className="min-w-40 flex-1">
+          <Input label="Compra" value={compra} onChange={(event) => setCompra(event.target.value)} />
+        </div>
 
-      <div className="flex flex-col">
-        <label htmlFor="categoria" className="text-sm text-gray-600">
-          Categoria
-        </label>
-        <input
-          id="categoria"
-          type="text"
-          value={categoria}
-          onChange={(event) => setCategoria(event.target.value)}
-          className={INPUT_CLASS}
-        />
-      </div>
+        <div className="min-w-40 flex-1">
+          <Input label="Categoria" value={categoria} onChange={(event) => setCategoria(event.target.value)} />
+        </div>
 
-      <div className="flex flex-col">
-        <label htmlFor="data" className="text-sm text-gray-600">
-          Data
-        </label>
-        <input
-          id="data"
-          type="date"
-          value={data}
-          onChange={(event) => setData(event.target.value)}
-          className={INPUT_CLASS}
-        />
-      </div>
+        <div className="min-w-40 flex-1">
+          <Input label="Data" type="date" value={data} onChange={(event) => setData(event.target.value)} />
+        </div>
 
-      <div className="flex flex-col">
-        <label htmlFor="custo" className="text-sm text-gray-600">
-          Custo
-        </label>
-        <input
-          id="custo"
-          type="number"
-          step="0.01"
-          min="0"
-          value={custo}
-          onChange={(event) => setCusto(event.target.value)}
-          className={INPUT_CLASS}
-        />
-      </div>
+        <div className="min-w-40 flex-1">
+          <Input
+            label="Custo"
+            type="number"
+            step="0.01"
+            min="0"
+            value={custo}
+            onChange={(event) => setCusto(event.target.value)}
+          />
+        </div>
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="rounded bg-gray-700 px-4 py-2 text-white transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {isSubmitting ? 'Adicionando...' : 'Adicionar linha'}
-      </button>
-    </form>
+        <Button type="submit" disabled={isSubmitting} icon={<PlusIcon size={16} />}>
+          {isSubmitting ? 'Adicionando...' : 'Adicionar linha'}
+        </Button>
+      </form>
+    </Card>
   )
 }
 
