@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import Button from './Button'
+import Table from './Table'
+import { formatarMoeda } from '../formatarMoeda'
+import { TrashIcon } from '../icons'
 
 const REMOVE_ANIMATION_MS = 200
 
@@ -17,43 +21,38 @@ function BudgetTable({ budgetData, onRemoveRow }) {
     }, REMOVE_ANIMATION_MS)
   }
 
+  const columns = [
+    { key: 'compra', header: 'Compra' },
+    { key: 'categoria', header: 'Categoria' },
+    { key: 'data', header: 'Data' },
+    {
+      key: 'custo',
+      header: 'Custo',
+      align: 'right',
+      render: (row) => <span className="font-mono text-amount-sm">{formatarMoeda(row.custo)}</span>,
+    },
+    {
+      key: 'acoes',
+      header: '',
+      align: 'right',
+      render: (row) => (
+        <Button variant="danger" size="sm" icon={<TrashIcon size={14} />} onClick={() => handleRemoveClick(row.id)}>
+          Remover linha
+        </Button>
+      ),
+    },
+  ]
+
   return (
-    <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow-sm">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="bg-gray-200 text-left text-sm text-gray-600">
-            <th className="p-3">Compra</th>
-            <th className="p-3">Categoria</th>
-            <th className="p-3">Data</th>
-            <th className="p-3">Custo</th>
-            <th className="p-3"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {budgetData.map((row) => (
-            <tr
-              key={row.id}
-              className={`animate-row-fade-in border-t border-gray-200 transition-all duration-200 hover:bg-gray-50 ${
-                removingIds.has(row.id) ? 'row-fade-out' : ''
-              }`}
-            >
-              <td className="p-3">{row.compra}</td>
-              <td className="p-3">{row.categoria}</td>
-              <td className="p-3">{row.data}</td>
-              <td className="p-3">{row.custo}</td>
-              <td className="p-3 text-right">
-                <button
-                  type="button"
-                  onClick={() => handleRemoveClick(row.id)}
-                  className="rounded bg-red-100 px-3 py-1 text-sm text-red-700 transition-colors hover:bg-red-200"
-                >
-                  Remover linha
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="mt-6">
+      <Table
+        columns={columns}
+        rows={budgetData}
+        caption="Despesas cadastradas"
+        rowClassName={(row) =>
+          `animate-row-fade-in transition-all duration-200 ${removingIds.has(row.id) ? 'row-fade-out' : ''}`
+        }
+      />
     </div>
   )
 }
