@@ -1,5 +1,75 @@
 @import "tailwindcss";
 
+@theme {
+  /* Cores — tokens do design system "Front" (docs/prd/nivel-4-redesign-visual/) */
+  --color-surface: #f6f5f0;
+  --color-surface-raised: #ffffff;
+  --color-surface-sunken: #f3f6fa;
+  --color-ink: #191919;
+  --color-ink-muted: #5b5b62;
+  --color-ink-faint: #8a8a90;
+  --color-border: #e6e3dc;
+  --color-border-strong: #85837c;
+  --color-brand: #006aff;
+  --color-brand-strong: #0052cc;
+  --color-brand-subtle: #e3efff;
+  --color-on-brand: #ffffff;
+  --color-accent: #a5670a;
+  --color-accent-subtle: #fbedd6;
+  --color-on-accent: #ffffff;
+  --color-success: #157a4f;
+  --color-success-subtle: #e1f5ea;
+  --color-on-success: #ffffff;
+  --color-danger: #c0293c;
+  --color-danger-subtle: #fbe6e7;
+  --color-on-danger: #ffffff;
+  --color-warning: #9a5b0a;
+  --color-warning-subtle: #fbedd6;
+  --color-on-warning: #ffffff;
+  --color-info: #2a63ae;
+  --color-info-subtle: #e5eef9;
+  --color-on-info: #ffffff;
+  --color-focus-ring: #0052cc;
+
+  /* Tipografia */
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --text-display: 34px;
+  --text-display--line-height: 40px;
+  --text-heading-lg: 24px;
+  --text-heading-lg--line-height: 32px;
+  --text-heading: 20px;
+  --text-heading--line-height: 28px;
+  --text-heading-sm: 17px;
+  --text-heading-sm--line-height: 24px;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 26px;
+  --text-body: 14px;
+  --text-body--line-height: 22px;
+  --text-body-sm: 13px;
+  --text-body-sm--line-height: 20px;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-label: 12px;
+  --text-label--line-height: 16px;
+  --text-amount-lg: 30px;
+  --text-amount-lg--line-height: 36px;
+  --text-amount: 16px;
+  --text-amount--line-height: 22px;
+  --text-amount-sm: 13px;
+  --text-amount-sm--line-height: 18px;
+  --tracking-label: 0.04em;
+
+  /* Raio e sombra */
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 24px;
+  --shadow-sm: 0 1px 2px rgba(18, 22, 43, 0.07), 0 1px 1px rgba(18, 22, 43, 0.04);
+  --shadow-md: 0 8px 20px rgba(18, 22, 43, 0.1), 0 2px 6px rgba(18, 22, 43, 0.06);
+}
+
 @keyframes row-fade-in {
   from {
     opacity: 0;
