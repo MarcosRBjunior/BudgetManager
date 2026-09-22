@@ -1,10 +1,12 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
+import Alert from './components/Alert'
 import BudgetForm from './components/BudgetForm'
 import BudgetTable from './components/BudgetTable'
 import BudgetStatsDashboard from './components/BudgetStatsDashboard'
+import Input from './components/Input'
 import TodosOsCustos from './components/TodosOsCustos'
 import { loadBudgetData, addRowToSheets } from './services/sheet2api'
-import { INPUT_CLASS } from './inputClassName'
+import { FilterIcon } from './icons'
 
 const CategoriaPieChart = lazy(() => import('./components/CategoriaPieChart'))
 
@@ -104,70 +106,67 @@ function App() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
+    <main className="min-h-screen bg-surface p-8">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-        <h1 className="text-2xl font-semibold text-gray-900">Gerenciador de Orçamento</h1>
+        <h1 className="text-display font-bold text-ink">Gerenciador de Orçamento</h1>
 
         <div className="flex items-end gap-3">
-          <div className="flex flex-col">
-            <label htmlFor="data-inicio" className="text-sm text-gray-600">
-              De
-            </label>
-            <input
-              id="data-inicio"
-              type="date"
-              value={dataInicio}
-              onChange={(event) => setDataInicio(event.target.value)}
-              className={INPUT_CLASS}
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label htmlFor="data-fim" className="text-sm text-gray-600">
-              Até
-            </label>
-            <input
-              id="data-fim"
-              type="date"
-              value={dataFim}
-              onChange={(event) => setDataFim(event.target.value)}
-              className={INPUT_CLASS}
-            />
-          </div>
+          <Input
+            label="De"
+            type="date"
+            value={dataInicio}
+            onChange={(event) => setDataInicio(event.target.value)}
+            icon={<FilterIcon size={16} />}
+            className="w-40"
+          />
+          <Input
+            label="Até"
+            type="date"
+            value={dataFim}
+            onChange={(event) => setDataFim(event.target.value)}
+            className="w-40"
+          />
         </div>
       </div>
 
       {filtroInvertido && (
-        <p className="mb-4 rounded border border-amber-300 bg-amber-50 p-3 text-sm text-amber-700">
+        <Alert tone="warning" className="mb-4">
           O campo "De" está depois do campo "Até" — ajuste o intervalo pra ver despesas.
-        </p>
+        </Alert>
       )}
 
       {addError && (
-        <p className="mb-4 rounded border border-red-300 bg-red-50 p-3 text-sm text-red-700">
+        <Alert tone="danger" className="mb-4">
           {addError}
-        </p>
+        </Alert>
       )}
 
       <BudgetForm onAddRow={addRow} />
 
       {isLoading ? (
-        <p className="mt-6 text-sm text-gray-500">Carregando dados...</p>
+        <div className="mt-6 flex flex-col gap-6" aria-hidden="true">
+          <div className="h-32 animate-pulse rounded-xl border border-border bg-surface-raised" />
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="h-64 animate-pulse rounded-xl border border-border bg-surface-raised" />
+            <div className="h-64 animate-pulse rounded-xl border border-border bg-surface-raised" />
+          </div>
+          <div className="h-48 animate-pulse rounded-xl border border-border bg-surface-raised" />
+        </div>
       ) : loadError ? (
-        <p className="mt-6 rounded border border-red-300 bg-red-50 p-3 text-sm text-red-700">
+        <Alert tone="danger" className="mt-6">
           {loadError}
-        </p>
+        </Alert>
       ) : (
         <>
           <div className="mt-6">
             <BudgetStatsDashboard gasto={gastoTotal} />
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
             <TodosOsCustos custosPorCategoria={custosPorCategoria} />
             <Suspense
               fallback={
-                <div className="flex h-64 items-center justify-center rounded-lg bg-white p-4 text-sm text-gray-400 shadow-sm">
+                <div className="flex h-64 items-center justify-center rounded-xl border border-border bg-surface-raised p-4 text-body text-ink-faint shadow-sm">
                   Carregando gráfico...
                 </div>
               }
